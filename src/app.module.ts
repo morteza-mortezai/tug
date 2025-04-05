@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { CompanyModule } from './company/company.module';
 import { ProductModule } from './product/product.module';
 import { ConfigModule } from '@nestjs/config';
@@ -18,6 +17,6 @@ import { typeOrmAsyncConfig } from './config/typeorm.config';
     TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}
