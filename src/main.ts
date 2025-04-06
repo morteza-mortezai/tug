@@ -4,6 +4,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { LoggerService } from './common/logger/logger.service';
 import { ConfigService } from '@nestjs/config';
+import { GlobalExceptionsFilter } from './common/filters/global-exception.filter';
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
@@ -17,7 +19,7 @@ async function bootstrap() {
   SwaggerModule.setup('api-docs', app, documentFactory);
   const logger = app.get<LoggerService>(LoggerService);
   const configService = app.get<ConfigService>(ConfigService);
-
+  app.useGlobalFilters(new GlobalExceptionsFilter());
   const port = configService.get<number>('APP_PORT') ?? 3000;
 
   await app.listen(port);
