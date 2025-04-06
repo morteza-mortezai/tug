@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmAsyncConfig } from './config/typeorm.config';
 import { CategoryService } from './product/category.service';
+import { LoggerService } from './common/logger/logger.service';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { CategoryService } from './product/category.service';
     TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [LoggerService],
 })
 export class AppModule implements OnModuleInit {
   constructor(private readonly mediaTypeService: CategoryService) {}
