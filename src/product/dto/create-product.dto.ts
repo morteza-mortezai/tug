@@ -1,10 +1,19 @@
-import { IsString, IsInt, IsOptional } from 'class-validator';
+import {
+  IsString,
+  IsInt,
+  IsOptional,
+  IsNotEmpty,
+  Matches,
+} from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export class CreateProductDto {
   @IsString()
+  @IsNotEmpty()
   name: string;
 
-  @IsString()
+  @Transform(({ value }: { value: unknown }) => String(value))
+  @Matches(/^\d+$/, { message: 'Barcode must be a numeric string' })
   barcode: string;
 
   @IsInt()

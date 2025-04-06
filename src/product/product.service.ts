@@ -38,7 +38,7 @@ export class ProductService {
     return this.productRepo.find();
   }
 
-  findOne(option: Record<string, any>) {
+  findOneBy(option: Record<string, any>) {
     return this.productRepo.findOneByOrFail(option);
   }
 
