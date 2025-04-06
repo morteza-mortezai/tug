@@ -29,7 +29,7 @@ export class CreateProductDto {
   @IsInt()
   categoryId: number;
 
-  @ApiProperty({ description: 'The subcategory ID of the product', example: 1 })
+  @ApiProperty({ description: 'The subcategory ID of the product', example: 2 })
   @IsOptional()
   @IsInt()
   subcategoryId?: number;

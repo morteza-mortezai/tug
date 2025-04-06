@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsInt } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateCompanyDto {
@@ -13,5 +13,6 @@ export class CreateCompanyDto {
     description: 'The product ID associated with the company',
     example: 1,
   })
+  @IsInt()
   productId: number;
 }
