@@ -19,7 +19,7 @@ export class CompanyService {
 
     const company = new Company();
     company.name = name;
-    company.product = await this.productservice.findOne(productId);
+    company.product = await this.productservice.findOne({ id: productId });
     return this.companyRepo.save(company);
   }
 

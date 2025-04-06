@@ -4,6 +4,9 @@ export class CreateProductDto {
   @IsString()
   name: string;
 
+  @IsString()
+  barcode: string;
+
   @IsInt()
   categoryId: number;
 

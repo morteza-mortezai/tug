@@ -30,6 +30,7 @@ export class ProductService {
       });
     }
     product.name = createProductDto.name;
+    product.barcode = createProductDto.barcode;
     return this.productRepo.save(product);
   }
 
@@ -37,8 +38,8 @@ export class ProductService {
     return this.productRepo.find();
   }
 
-  findOne(id: number) {
-    return this.productRepo.findOneByOrFail({ id });
+  findOne(option: Record<string, any>) {
+    return this.productRepo.findOneByOrFail(option);
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {

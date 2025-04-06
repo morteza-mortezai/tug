@@ -3,8 +3,6 @@ import {
   Column,
   DeleteDateColumn,
   ManyToOne,
-  OneToOne,
-  JoinColumn,
   OneToMany,
 } from 'typeorm';
 import { BaseEntity } from '../../common/entities/base.entity';
@@ -16,6 +14,9 @@ import { Subcategory } from './subcategory.entity';
 export class Product extends BaseEntity {
   @Column()
   name: string;
+
+  @Column()
+  barcode: string;
 
   @ManyToOne(() => Category, (category) => category.products, {
     nullable: false,
