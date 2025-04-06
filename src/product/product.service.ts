@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
@@ -24,10 +24,12 @@ export class ProductService {
     );
     // find subcategory
     if (createProductDto.subcategoryId) {
-      product.subCategory = await this.subcategorySevice.findOne({
-        subcategoryId: createProductDto.subcategoryId,
-        categoryId: createProductDto.categoryId,
-      });
+      product.subCategory = await this.subcategorySevice.findRelatedSubcategory(
+        {
+          subcategoryId: createProductDto.subcategoryId,
+          categoryId: createProductDto.categoryId,
+        },
+      );
     }
     product.name = createProductDto.name;
     product.barcode = createProductDto.barcode;
@@ -38,17 +40,25 @@ export class ProductService {
     return this.productRepo.find();
   }
 
-  findOneBy(option: Record<string, any>) {
-    return this.productRepo.findOneByOrFail(option);
+  async findOneBy(option: Record<string, any>) {
+    const product = await this.productRepo.findOneBy(option);
+    if (!product) {
+      throw new NotFoundException(`Product not found`);
+    }
+    return product;
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
-    const product = await this.productRepo.findOneByOrFail({ id });
+    const product = await this.findOneBy({ id });
 
     return this.productRepo.save({ ...product, ...updateProductDto });
   }
 
-  remove(id: number) {
-    return this.productRepo.delete({ id });
+  async remove(id: number) {
+    const result = await this.productRepo.delete({ id });
+    if (result.affected === 0) {
+      throw new NotFoundException(`Product with ID ${id} not found`);
+    }
+    return result;
   }
 }

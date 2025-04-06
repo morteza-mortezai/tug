@@ -20,6 +20,7 @@ import { LoggerService } from './common/logger/logger.service';
   ],
   controllers: [AppController],
   providers: [LoggerService],
+  exports: [LoggerService],
 })
 export class AppModule implements OnModuleInit {
   constructor(private readonly mediaTypeService: CategoryService) {}

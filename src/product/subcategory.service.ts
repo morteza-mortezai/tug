@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Subcategory } from './entities/subcategory.entity';
@@ -10,21 +10,29 @@ export class SubcategoryService {
     private subcategoryRepo: Repository<Subcategory>,
   ) {}
 
-  // findAll() {
-  //   return `This action returns all product`;
-  // }
+  findAll() {
+    return this.subcategoryRepo.find();
+  }
 
-  findOne({
+  async findRelatedSubcategory({
     subcategoryId,
     categoryId,
   }: {
     subcategoryId: number;
     categoryId: number;
   }) {
-    return this.subcategoryRepo.findOneByOrFail({
+    const subcategory = await this.subcategoryRepo.findOneBy({
       id: subcategoryId,
       category: { id: categoryId },
     });
+
+    if (!subcategory) {
+      throw new NotFoundException(
+        `Subcategory with ID ${subcategoryId} and Category of ${categoryId} not found`,
+      );
+    }
+
+    return subcategory;
   }
 
   // update(id: number, updateProductDto: UpdateProductDto) {

@@ -17,9 +17,11 @@ async function bootstrap() {
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, documentFactory);
+  
   const logger = app.get<LoggerService>(LoggerService);
   const configService = app.get<ConfigService>(ConfigService);
-  app.useGlobalFilters(new GlobalExceptionsFilter());
+
+  app.useGlobalFilters(new GlobalExceptionsFilter(logger));
   const port = configService.get<number>('APP_PORT') ?? 3000;
 
   await app.listen(port);
