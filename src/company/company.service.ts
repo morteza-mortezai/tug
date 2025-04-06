@@ -24,18 +24,19 @@ export class CompanyService {
   }
 
   findAll() {
-    return `This action returns all company`;
+    return this.companyRepo.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} company`;
+    return this.companyRepo.findOneByOrFail({ id });
   }
 
-  update(id: number, updateCompanyDto: UpdateCompanyDto) {
-    return `This action updates a #${id} company`;
+  async update(id: number, updateCompanyDto: UpdateCompanyDto) {
+    const company = await this.companyRepo.findOneByOrFail({ id });
+    return this.companyRepo.save({ ...company, ...updateCompanyDto });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} company`;
+  async remove(id: number) {
+    return this.companyRepo.delete({ id });
   }
 }

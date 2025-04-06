@@ -34,18 +34,20 @@ export class ProductService {
   }
 
   findAll() {
-    return `This action returns all product`;
+    return this.productRepo.find();
   }
 
   findOne(id: number) {
     return this.productRepo.findOneByOrFail({ id });
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: number, updateProductDto: UpdateProductDto) {
+    const product = await this.productRepo.findOneByOrFail({ id });
+
+    return this.productRepo.save({ ...product, ...updateProductDto });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} product`;
+    return this.productRepo.delete({ id });
   }
 }
