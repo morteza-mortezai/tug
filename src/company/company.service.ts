@@ -24,11 +24,14 @@ export class CompanyService {
   }
 
   findAll() {
-    return this.companyRepo.find();
+    return this.companyRepo.find({ relations: ['product'] });
   }
 
   async findOne(id: number) {
-    const company = await this.companyRepo.findOneBy({ id });
+    const company = await this.companyRepo.findOne({
+      where: { id },
+      relations: ['product'],
+    });
     if (!company) {
       throw new NotFoundException(`Company with ID ${id} not found`);
     }
@@ -36,11 +39,15 @@ export class CompanyService {
   }
 
   async update(id: number, updateCompanyDto: UpdateCompanyDto) {
-    const company = await this.companyRepo.findOneBy({ id });
+    const company = await this.findOne(id);
     return this.companyRepo.save({ ...company, ...updateCompanyDto });
   }
 
   async remove(id: number) {
-    return this.companyRepo.delete({ id });
+    const result = await this.companyRepo.delete({ id });
+    if (result.affected === 0) {
+      throw new NotFoundException(`Company with ID ${id} not found`);
+    }
+    return result;
   }
 }

@@ -37,11 +37,16 @@ export class ProductService {
   }
 
   findAll() {
-    return this.productRepo.find();
+    return this.productRepo.find({
+      relations: ['category', 'subCategory'],
+    });
   }
 
   async findOneBy(option: Record<string, any>) {
-    const product = await this.productRepo.findOneBy(option);
+    const product = await this.productRepo.findOne({
+      where: { ...option },
+      relations: ['category', 'subCategory'],
+    });
     if (!product) {
       throw new NotFoundException(`Product not found`);
     }
