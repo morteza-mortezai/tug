@@ -5,6 +5,7 @@ import {
   ManyToOne,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { BaseEntity } from '../../common/entities/base.entity';
 import { Company } from 'src/company/entities/company.entity';
@@ -15,9 +16,6 @@ import { Subcategory } from './subcategory.entity';
 export class Product extends BaseEntity {
   @Column()
   name: string;
-
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
-  price: number;
 
   @ManyToOne(() => Category, (category) => category.products, {
     nullable: false,
@@ -31,9 +29,8 @@ export class Product extends BaseEntity {
   })
   subCategory: Subcategory;
 
-  @OneToOne(() => Company, (company) => company.product)
-  @JoinColumn()
-  company: Company;
+  @OneToMany(() => Company, (company) => company.product)
+  company: Company[];
 
   @DeleteDateColumn({ name: 'deleted_at', nullable: true })
   deletedAt?: Date;

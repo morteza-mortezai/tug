@@ -4,8 +4,21 @@ import { UpdateCompanyDto } from './dto/update-company.dto';
 
 @Injectable()
 export class CompanyService {
-  create(createCompanyDto: CreateCompanyDto) {
-    return 'This action adds a new company';
+  async create(createDto: CreateCompanyDto) {
+    // const { name, product: productDto } = createDto;
+
+
+
+    // const product = new Product();
+    // product.name = productDto.name;
+    // product.category = category;
+    // product.subcategory = subcategory;
+
+    // const company = new Company();
+    // company.name = name;
+    // company.product = product;
+
+    // return this.companyRepo.save(company);
   }
 
   findAll() {
