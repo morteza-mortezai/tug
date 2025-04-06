@@ -26,15 +26,29 @@ export class CategoryService {
   //   return `This action removes a #${id} product`;
   // }
   async seed() {
-    const categories = [
-      {
-        name: 'category A',
-      },
-      { name: 'catetgory B' },
-    ];
     const count = await this.categoryRepo.count();
-    if (count == 0) {
-      this.categoryRepo.insert(categories);
+    if (count > 0) return;
+
+    const categories: {
+      name: string;
+      subcategories: { name: string; category?: any }[];
+    }[] = [
+      {
+        name: 'Category A',
+        subcategories: [{ name: 'Subcategory A1' }, { name: 'Subcategory A2' }],
+      },
+      {
+        name: 'Category B',
+        subcategories: [{ name: 'Subcategory B1' }, { name: 'Subcategory B2' }],
+      },
+    ];
+
+    for (const category of categories) {
+      category.subcategories.forEach((subcategory) => {
+        subcategory.category = category;
+      });
     }
+
+    await this.categoryRepo.save(categories);
   }
 }
