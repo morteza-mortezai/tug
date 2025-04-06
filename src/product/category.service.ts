@@ -25,4 +25,16 @@ export class CategoryService {
   // remove(id: number) {
   //   return `This action removes a #${id} product`;
   // }
+  async seed() {
+    const categories = [
+      {
+        name: 'category A',
+      },
+      { name: 'catetgory B' },
+    ];
+    const count = await this.categoryRepo.count();
+    if (count == 0) {
+      this.categoryRepo.insert(categories);
+    }
+  }
 }
