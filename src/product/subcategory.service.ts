@@ -1,17 +1,29 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Subcategory } from './entities/subcategory.entity';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class SubcategoryService {
   constructor(
     @InjectRepository(Subcategory)
     private subcategoryRepo: Repository<Subcategory>,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
-  findAll() {
-    return this.subcategoryRepo.find();
+  async findAll() {
+    const cacheKey = 'subcategories:all';
+    const cached = await this.cacheManager.get<Subcategory[]>(cacheKey);
+    if (cached) {
+      return cached;
+    }
+    const subcategories = await this.subcategoryRepo.find({
+      relations: ['category'],
+    });
+    await this.cacheManager.set(cacheKey, subcategories);
+    return subcategories;
   }
 
   async findRelatedSubcategory({
@@ -34,12 +46,4 @@ export class SubcategoryService {
 
     return subcategory;
   }
-
-  // update(id: number, updateProductDto: UpdateProductDto) {
-  //   return `This action updates a #${id} product`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} product`;
-  // }
 }

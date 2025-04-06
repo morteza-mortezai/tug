@@ -7,6 +7,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmAsyncConfig } from './config/typeorm.config';
 import { CategoryService } from './product/category.service';
 import { LoggerService } from './common/logger/logger.service';
+import { CacheModule } from '@nestjs/cache-manager';
+import { redisAsyncConfig } from './config/redis.config';
 
 @Module({
   imports: [
@@ -14,9 +16,9 @@ import { LoggerService } from './common/logger/logger.service';
     ProductModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      // envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
     }),
     TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
+    CacheModule.registerAsync(redisAsyncConfig),
   ],
   controllers: [AppController],
   providers: [LoggerService],

@@ -1,4 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject } from '@nestjs/common';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from './entities/category.entity';
 import { Repository } from 'typeorm';
@@ -8,27 +10,35 @@ export class CategoryService {
   constructor(
     @InjectRepository(Category)
     private categoryRepo: Repository<Category>,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
-  // findAll() {
-  //   return `This action returns all product`;
-  // }
+  async findAll() {
+    const cacheKey = 'categories:all';
+    const cached = await this.cacheManager.get<Category[]>(cacheKey);
+
+    if (cached) {
+      return cached;
+    }
+
+    const categories = await this.categoryRepo.find({
+      relations: ['subcategories'],
+    });
+    await this.cacheManager.set(cacheKey, categories);
+    return categories;
+  }
 
   async findOne(id: number) {
-    const category = await this.categoryRepo.findOneBy({ id });
+    const category = await this.categoryRepo.findOne({
+      where: { id },
+      relations: ['subcategories'],
+    });
     if (!category) {
       throw new NotFoundException(`Category with ID ${id} not found`);
     }
     return category;
   }
 
-  // update(id: number, updateProductDto: UpdateProductDto) {
-  //   return `This action updates a #${id} product`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} product`;
-  // }
   async seed() {
     const count = await this.categoryRepo.count();
     if (count > 0) return;
