@@ -14,8 +14,17 @@ export class SubcategoryService {
   //   return `This action returns all product`;
   // }
 
-  findOne(id: number) {
-    return this.subcategoryRepo.findOneByOrFail({ id });
+  findOne({
+    subcategoryId,
+    categoryId,
+  }: {
+    subcategoryId: number;
+    categoryId: number;
+  }) {
+    return this.subcategoryRepo.findOneByOrFail({
+      id: subcategoryId,
+      category: { id: categoryId },
+    });
   }
 
   // update(id: number, updateProductDto: UpdateProductDto) {

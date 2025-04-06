@@ -18,13 +18,16 @@ export class ProductService {
 
   async create(createProductDto: CreateProductDto) {
     const product = this.productRepo.create();
+    // find and assign category
     product.category = await this.categorySevice.findOne(
       createProductDto.categoryId,
     );
+    // find subcategory
     if (createProductDto.subcategoryId) {
-      product.subCategory = await this.subcategorySevice.findOne(
-        createProductDto.subcategoryId,
-      );
+      product.subCategory = await this.subcategorySevice.findOne({
+        subcategoryId: createProductDto.subcategoryId,
+        categoryId: createProductDto.categoryId,
+      });
     }
     product.name = createProductDto.name;
     return this.productRepo.save(product);
