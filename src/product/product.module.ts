@@ -12,6 +12,6 @@ import { Subcategory } from './entities/subcategory.entity';
   controllers: [ProductController],
   providers: [ProductService, CategoryService, SubcategoryService],
   imports: [TypeOrmModule.forFeature([Product, Category, Subcategory])],
-  exports:[CategoryService]
+  exports: [CategoryService, ProductService],
 })
 export class ProductModule {}

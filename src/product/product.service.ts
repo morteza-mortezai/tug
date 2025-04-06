@@ -38,7 +38,7 @@ export class ProductService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} product`;
+    return this.productRepo.findOneByOrFail({ id });
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {
