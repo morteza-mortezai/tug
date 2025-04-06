@@ -44,7 +44,7 @@ export class CompanyService {
   }
 
   async remove(id: number) {
-    const result = await this.companyRepo.delete({ id });
+    const result = await this.companyRepo.softDelete({ id });
     if (result.affected === 0) {
       throw new NotFoundException(`Company with ID ${id} not found`);
     }
