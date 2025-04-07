@@ -17,7 +17,7 @@ async function bootstrap() {
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, documentFactory);
-  
+
   const logger = app.get<LoggerService>(LoggerService);
   const configService = app.get<ConfigService>(ConfigService);
 

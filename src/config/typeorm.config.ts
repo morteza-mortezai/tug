@@ -13,9 +13,9 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
     if (dbType === 'sqlite') {
       return {
         type: 'sqlite',
-        database: configService.get<string>('DB_NAME', ':memory:'), // use in-memory db
+        database: configService.get<string>('DB_NAME', ':memory:'),
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-        synchronize: true, // auto-sync schema in tests
+        synchronize: true,
       };
     }
 
