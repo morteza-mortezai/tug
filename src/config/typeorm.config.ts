@@ -1,17 +1,20 @@
-import { TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
+import {
+  TypeOrmModuleAsyncOptions,
+  TypeOrmModuleOptions,
+} from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
   inject: [ConfigService],
-  useFactory: (configService: ConfigService) => ({
-    type: configService.get('DB_TYPE'),
-    host: configService.get('DB_HOST'),
+  useFactory: (configService: ConfigService): TypeOrmModuleOptions => ({
+    type: configService.get<'mysql' | 'sqlite'>('DB_TYPE', 'mysql'),
+    host: configService.get<string>('DB_HOST'),
     port: configService.get<number>('DB_PORT'),
-    username: configService.get('DB_USERNAME'),
-    password: configService.get('DB_PASSWORD'),
-    database: configService.get('DB_NAME'),
+    username: configService.get<string>('DB_USERNAME'),
+    password: configService.get<string>('DB_PASSWORD'),
+    database: configService.get<string>('DB_DATABASE'),
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-    synchronize: configService.get('NODE_ENV') !== 'production', // disable in production
+    synchronize: configService.get<boolean>('DB_SYNC', false),
   }),
 };
