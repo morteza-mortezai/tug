@@ -16,8 +16,8 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: tug
-          MYSQL_USER: mrtz
-          MYSQL_PASSWORD: 3132820MRtz?
+          MYSQL_USER: root
+
         ports:
           - 3306:3306
         options: >-
