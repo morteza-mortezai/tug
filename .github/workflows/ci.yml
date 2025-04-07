@@ -34,7 +34,7 @@ jobs:
     env:
       NODE_ENV: test
       DB_TYPE: sqlite
-      DB_NAME: memory
+      DB_NAME: ":memory"
       DB_SYNC: true
       REDIS_HOST: 127.0.0.1
       REDIS_PORT: 6379
