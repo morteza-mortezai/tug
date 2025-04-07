@@ -31,7 +31,7 @@ export class Product extends BaseEntity {
   subCategory: Subcategory;
 
   @OneToMany(() => Company, (company) => company.product)
-  company: Company[];
+  companies: Company[];
 
   @DeleteDateColumn({ name: 'deleted_at', nullable: true })
   deletedAt?: Date;
