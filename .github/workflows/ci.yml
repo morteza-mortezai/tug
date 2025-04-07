@@ -33,12 +33,8 @@ jobs:
 
     env:
       NODE_ENV: test
-      DB_TYPE: mysql
-      DB_HOST: 127.0.0.1
-      DB_PORT: 3306
-      DB_USERNAME: mrtz
-      DB_PASSWORD: 3132820MRtz?
-      DB_NAME: tug
+      DB_TYPE: sqlite
+      DB_NAME: memory
       DB_SYNC: true
       REDIS_HOST: 127.0.0.1
       REDIS_PORT: 6379
