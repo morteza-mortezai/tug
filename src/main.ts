@@ -25,7 +25,11 @@ async function bootstrap() {
   const port = configService.get<number>('APP_PORT') ?? 3000;
 
   await app.listen(port);
+
   logger.log(`Application is running on: http://localhost:${port}`);
   logger.log(`Environment: ${process.env.NODE_ENV}`);
+
+  console.log('NODE_ENV:', process.env.NODE_ENV);
+  console.log('DB_NAME:', process.env.DB_NAME);
 }
 bootstrap();
