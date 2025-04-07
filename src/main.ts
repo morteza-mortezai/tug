@@ -29,7 +29,7 @@ async function bootstrap() {
   logger.log(`Application is running on: http://localhost:${port}`);
   logger.log(`Environment: ${process.env.NODE_ENV}`);
 
-  console.log('NODE_ENV:', process.env.NODE_ENV);
-  console.log('DB_NAME:', process.env.DB_NAME);
+  logger.log('NODE_ENV: ' + process.env.NODE_ENV);
+  logger.log('DB_NAME:' + process.env.DB_NAME);
 }
 bootstrap();
