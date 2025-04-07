@@ -9,14 +9,20 @@
    ```
 
 2. **Configure Environment Variables**\
-   Rename a `.env.example` to `.env`.
+   Copy the example file and set your DB credentials:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Then edit `.env` if needed:
 
    ```env
    DB_HOST=localhost
    DB_PORT=3306
    DB_USERNAME=root
-   DB_PASSWORD=
-   DB_DATABASE=
+   DB_PASSWORD=yourpassword
+   DB_DATABASE=yourdbname
    ```
 
 3. **Run the Application**
@@ -27,18 +33,22 @@
 
 4. **Swagger Documentation**
 
-   Access API docs at: [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+   Access local API docs at: [http://localhost:3000/api-docs](http://localhost:3000/api-docs)  
+   Also project demo is deployed : [https://triumphant-joy-production-7871.up.railway.app/api-docs](https://triumphant-joy-production-7871.up.railway.app/api-docs)
 
-## 🧪 How to Test the Endpoints
+## 🤪 How to Test the Endpoints
 
 - Use **Postman**, **Insomnia**, or **curl**
-- Swagger is available at [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
-- Run  e2e tests:
+- Swagger is available at:
+  - [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+- also deployed project available at :
+  - [https://triumphant-joy-production-7871.up.railway.app/api-docs](https://triumphant-joy-production-7871.up.railway.app/api-docs)
+- Run tests :
   ```bash
   npm run test:e2e
   ```
 
-## 🧾 API Endpoints
+## 📿 API Endpoints
 
 ---
 
@@ -130,7 +140,7 @@
 
 ---
 
-### 🗂 `/product/categories`
+### 💂 `/product/categories`
 
 #### `GET /product/categories` — Get all categories (with subcategories)
 
