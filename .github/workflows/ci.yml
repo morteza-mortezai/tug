@@ -55,7 +55,7 @@ jobs:
 
       - name: Wait for MySQL to be ready
         run: |
-          until mysql -h127.0.0.1 -umrtz -p'3132820MRtz?' -e 'SELECT 1'; do
+          until mysql -h127.0.0.1 -umrtz -p'mrtz' -e 'SELECT 1'; do
             echo "Waiting for MySQL..."
             sleep 5
           done
