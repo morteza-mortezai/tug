@@ -8,10 +8,6 @@ export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
   inject: [ConfigService],
   useFactory: (configService: ConfigService): TypeOrmModuleOptions => {
-    console.log(
-      'db**',
-      configService.get<'mysql' | 'sqlite'>('DB_TYPE', 'mysql'),
-    );
     const dbType = configService.get<string>('DB_TYPE', 'mysql');
 
     if (dbType === 'sqlite') {
