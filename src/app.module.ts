@@ -16,12 +16,7 @@ import { redisAsyncConfig } from './config/redis.config';
     ProductModule,
     ConfigModule.forRoot({
       isGlobal: true,
-<<<<<<< HEAD
-      ignoreEnvFile: process.env.NODE_ENV === 'production',
-      // envFilePath: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
-=======
       envFilePath: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
->>>>>>> parent of 66bd173 (update configModule  env path)
     }),
     TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
     CacheModule.registerAsync(redisAsyncConfig),
