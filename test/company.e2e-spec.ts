@@ -10,7 +10,7 @@ describe('CompanyController (e2e)', () => {
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule], // must include CompanyModule & ProductModule
+      imports: [AppModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
@@ -20,8 +20,13 @@ describe('CompanyController (e2e)', () => {
     // Create a product to use in tests
     const productRes = await request(app.getHttpServer())
       .post('/product')
-      .send({ name: 'Test Product', barcode: '123456' });
-    createdProductId = productRes.body.id;
+      .send({ name: 'Test Product', barcode: '123456', categoryId: 1 });
+    // console.log('created product', productRes.body);
+    if (productRes?.body?.id) {
+      createdProductId = productRes.body.id;
+    }
+
+    expect(createdProductId).toBeDefined();
   });
 
   afterAll(async () => {
@@ -40,7 +45,6 @@ describe('CompanyController (e2e)', () => {
     expect(res.body).toHaveProperty('id');
     expect(res.body.name).toBe('Test Company');
     expect(res.body.product.id).toBe(createdProductId);
-
     createdCompanyId = res.body.id;
   });
 
