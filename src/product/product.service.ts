@@ -12,19 +12,19 @@ export class ProductService {
   constructor(
     @InjectRepository(Product)
     private productRepo: Repository<Product>,
-    private categorySevice: CategoryService,
-    private subcategorySevice: SubcategoryService,
+    private categoryService: CategoryService,
+    private subcategoryService: SubcategoryService,
   ) {}
 
   async create(createProductDto: CreateProductDto) {
     const product = this.productRepo.create();
     // find and assign category
-    product.category = await this.categorySevice.findOne(
+    product.category = await this.categoryService.findOne(
       createProductDto.categoryId,
     );
     // find subcategory
     if (createProductDto.subcategoryId) {
-      product.subCategory = await this.subcategorySevice.findRelatedSubcategory(
+      product.subCategory = await this.subcategoryService.findRelatedSubcategory(
         {
           subcategoryId: createProductDto.subcategoryId,
           categoryId: createProductDto.categoryId,

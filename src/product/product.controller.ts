@@ -34,14 +34,14 @@ export class ProductController {
     return this.categoryService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productService.findOneBy({ id: +id });
-  }
-
   @Get('barcode/:barcode')
   findByBarcode(@Param('barcode') barcode: string) {
     return this.productService.findOneBy({ barcode });
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.productService.findOneBy({ id: +id });
   }
 
   @Patch(':id')
