@@ -17,7 +17,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: tug
           MYSQL_USER: mrtz
-          MYSQL_PASSWORD: 3132820MRtz?
+          MYSQL_PASSWORD: mrtz
         ports:
           - 3306:3306
         options: >-
@@ -34,7 +34,7 @@ jobs:
     env:
       NODE_ENV: test
       DB_TYPE: sqlite
-      DB_NAME: ":memory"
+      DB_NAME: ":memory:"
       DB_SYNC: true
       REDIS_HOST: 127.0.0.1
       REDIS_PORT: 6379
