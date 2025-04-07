@@ -4,8 +4,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 export const typeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
   inject: [ConfigService],
-  useFactory:  (configService: ConfigService) => ({
-    type: 'mysql',
+  useFactory: (configService: ConfigService) => ({
+    type: configService.get('DB_TYPE'),
     host: configService.get('DB_HOST'),
     port: configService.get<number>('DB_PORT'),
     username: configService.get('DB_USERNAME'),
