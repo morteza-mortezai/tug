@@ -42,7 +42,19 @@ export class CompanyService {
 
   async update(id: number, updateCompanyDto: UpdateCompanyDto) {
     const company = await this.findOne(id);
-    return this.companyRepo.save({ ...company, ...updateCompanyDto });
+
+    if (updateCompanyDto.productId) {
+      const product = await this.productservice.findOneBy({
+        id: updateCompanyDto.productId,
+      });
+      company.product = product;
+    }
+
+    if (updateCompanyDto.name) {
+      company.name = updateCompanyDto.name;
+    }
+
+    return this.companyRepo.save(company);
   }
 
   async remove(id: number) {

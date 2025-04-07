@@ -24,12 +24,11 @@ export class ProductService {
     );
     // find subcategory
     if (createProductDto.subcategoryId) {
-      product.subCategory = await this.subcategoryService.findRelatedSubcategory(
-        {
+      product.subCategory =
+        await this.subcategoryService.findRelatedSubcategory({
           subcategoryId: createProductDto.subcategoryId,
           categoryId: createProductDto.categoryId,
-        },
-      );
+        });
     }
     product.name = createProductDto.name;
     product.barcode = createProductDto.barcode;
@@ -55,7 +54,22 @@ export class ProductService {
 
   async update(id: number, updateProductDto: UpdateProductDto) {
     const product = await this.findOneBy({ id });
-
+    if (
+      updateProductDto.categoryId &&
+      updateProductDto.categoryId !== product.category.id
+    ) {
+      product.category = await this.categoryService.findOne(
+        updateProductDto.categoryId,
+      );
+      product.subCategory = null;
+    }
+    if (updateProductDto.subcategoryId) {
+      product.subCategory =
+        await this.subcategoryService.findRelatedSubcategory({
+          subcategoryId: updateProductDto.subcategoryId,
+          categoryId: updateProductDto.categoryId || product.category.id,
+        });
+    }
     return this.productRepo.save({ ...product, ...updateProductDto });
   }
 

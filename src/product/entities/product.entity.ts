@@ -28,7 +28,7 @@ export class Product extends BaseEntity {
     nullable: true,
     onDelete: 'SET NULL',
   })
-  subCategory: Subcategory;
+  subCategory: Subcategory | null;
 
   @OneToMany(() => Company, (company) => company.product)
   companies: Company[];
